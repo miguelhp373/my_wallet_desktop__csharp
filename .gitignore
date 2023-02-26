@@ -1,0 +1,23 @@
+# Ignorar arquivos binários gerados pelo Visual Studio
+*.exe
+*.dll
+*.pdb
+
+# Ignorar arquivos gerados automaticamente
+obj/
+bin/
+
+# Ignorar arquivos temporários
+[Tt]emp/
+.vs/
+
+# Ignorar arquivos de configuração de usuário
+*.user
+*.suo
+*.cache
+
+# Ignorar arquivos de log
+*.log
+
+# Ignorar arquivos de saída de build
+[Bb]uild/
