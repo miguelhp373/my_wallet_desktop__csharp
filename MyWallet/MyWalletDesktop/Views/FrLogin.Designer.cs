@@ -65,6 +65,7 @@
             this.edt_user_password.PasswordChar = '*';
             this.edt_user_password.Size = new System.Drawing.Size(289, 24);
             this.edt_user_password.TabIndex = 1;
+            this.edt_user_password.KeyUp += new System.Windows.Forms.KeyEventHandler(this.edt_user_password_KeyUp);
             // 
             // label2
             // 

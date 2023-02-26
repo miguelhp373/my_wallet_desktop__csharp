@@ -99,6 +99,7 @@ namespace MyWalletDesktop.Controllers
             
 
             var isCommandSQLForLoginAction = "SELECT COUNT(*) FROM PROD_USERS_TABLE WHERE userName = @userName AND userPass = @userPass";
+            var isCommandSQLForGetDataOfUser = "SELECT * FROM PROD_USERS_TABLE WHERE userName = @userName";
 
             try
             {
@@ -116,6 +117,29 @@ namespace MyWalletDesktop.Controllers
                         int hasLoginAuth = (int)isCommmand.ExecuteScalar();
 
                         UserSession.CurrentUser.userAuth = hasLoginAuth > 0 ? true : false;
+
+                        if (!UserSession.CurrentUser.userAuth)
+                        {
+                            UserSession.CurrentUser.userError = "";
+                            return;
+                        }
+                    }
+
+                    using (SqlCommand isCommmand = new SqlCommand(isCommandSQLForGetDataOfUser, isConnection))
+                    {
+                        isCommmand.Parameters.AddWithValue("@userName", userName);
+
+                        SqlDataReader isReaderRows =  isCommmand.ExecuteReader();
+
+                        if (isReaderRows.HasRows)
+                        {
+                            while (isReaderRows.Read())
+                            {
+                                UserSession.CurrentUser.userName = isReaderRows["userName"].ToString();
+                                UserSession.CurrentUser.userADM = bool.Parse(isReaderRows["userADM"].ToString());
+                                UserSession.CurrentUser.userActive = bool.Parse(isReaderRows["userActive"].ToString());
+                            }
+                        }
                     }
 
                     isConnection.Close();
@@ -125,6 +149,7 @@ namespace MyWalletDesktop.Controllers
             catch (Exception exceptionMessage)
             {
                 UserSession.CurrentUser.userError = exceptionMessage.ToString();
+                return;
             }
 
             UserSession.CurrentUser.userError = "";

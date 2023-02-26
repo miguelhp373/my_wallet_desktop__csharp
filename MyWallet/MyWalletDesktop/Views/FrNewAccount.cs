@@ -90,6 +90,13 @@ namespace MyWalletDesktop.Views
 
         }
 
+        private void edt_user_password_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnAddingAction_Click(btnAddingAction, e);
+            }
+        }
     }
 
  
